@@ -1,7 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3Api::class
+    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class
 )
 
 package com.example.userinput
@@ -38,6 +38,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -77,6 +78,10 @@ fun FormLogin(modifier: Modifier = Modifier){
     var text2 by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var resultText by remember { mutableStateOf("") }
+
+    var gender by remember {
+        mutableStateOf("")
+    }
 
     val dropdownOptions = listOf("Option 1", "Option 2", "Option 3")
     var selectedOption by remember { mutableStateOf(dropdownOptions[0]) }
@@ -128,7 +133,26 @@ fun FormLogin(modifier: Modifier = Modifier){
         )
 
         //RadioButton
-        
+        Box(
+            modifier = Modifier.fillMaxWidth().padding(start = 55.dp, top = 5.dp),
+            contentAlignment = Alignment.CenterStart
+        ){
+            Row {
+                Text(text = "Gender:")
+                Column (verticalArrangement = Arrangement.Center){
+                    Row (verticalAlignment = Alignment.CenterVertically){
+                        RadioButton(selected = gender == "Male", onClick = { gender = "Male" })
+                        Text(text = "Male")
+                    }
+
+                    Row (verticalAlignment = Alignment.CenterVertically){
+                        RadioButton(selected = gender == "Female", onClick = { gender = "Female" })
+                        Text(text = "Female")
+                    }
+                }
+
+            }
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -171,6 +195,7 @@ fun FormLogin(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(30.dp))
 
         Button(onClick = { resultText = " Name: ${nama.text} \nEmail: ${text.text} \n No. Hp: ${text2.text} \n Password: ${password.text}" +
+                " \n Gender: ${gender}" +
                 " \n Pilihan: ${selectedOption}" }) {
             Text(text = "Save")
         }
